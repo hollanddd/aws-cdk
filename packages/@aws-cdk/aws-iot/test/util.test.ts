@@ -1,6 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import { nodeunitShim, Test } from 'nodeunit-shim';
-import { parseCertificateArn, parseCertificateId, parsePolicyArn } from '../lib/util';
+import { parseCertificateArn, parseCertificateId, parsePolicyArn, parseRuleName } from '../lib/util';
 
 nodeunitShim({
   certificateArnFromId: {
@@ -46,6 +46,13 @@ nodeunitShim({
               { Ref: 'AWS::AccountId' },
               ':policy/hello']],
       });
+      test.done();
+    },
+  },
+  ruleNameFromArn: {
+    'produce rule name from topic rule arn'(test: Test) {
+      const topicRuleArn = 'arn:aws:iot:::rule/hello';
+      test.deepEqual(parseRuleName(topicRuleArn), 'hello');
       test.done();
     },
   },

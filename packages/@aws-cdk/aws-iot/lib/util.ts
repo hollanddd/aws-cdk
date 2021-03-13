@@ -1,5 +1,5 @@
 export { generatePolicyName } from '@aws-cdk/aws-iam/lib/util';
-import { Stack } from '@aws-cdk/core';
+import { Fn, Stack } from '@aws-cdk/core';
 import { IConstruct } from 'constructs';
 import { CertificateAttributes } from './certificate';
 import { ThingAttributes } from './thing';
@@ -66,4 +66,8 @@ function parseArn(construct: IConstruct, resource: string, resourceName: string)
     resource: resource,
     resourceName: resourceName,
   });
+}
+
+export function parseRuleName(topicRuleArn: string): string {
+  return Fn.select(1, Fn.split('rule/', topicRuleArn));
 }
