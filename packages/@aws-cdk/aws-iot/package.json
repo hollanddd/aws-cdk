@@ -102,7 +102,10 @@
       "props-default-doc:@aws-cdk/aws-iot.CertificateAttributes.certificateArn",
       "props-default-doc:@aws-cdk/aws-iot.CertificateAttributes.certificateId",
       "props-physical-name:@aws-cdk/aws-iot.CertificateProps",
-      "props-physical-name:@aws-cdk/aws-iot.PolicyProps"
+      "props-physical-name:@aws-cdk/aws-iot.PolicyProps",
+      "docs-public-apis:@aws-cdk/aws-iot.TopicRule.fromReceiptRuleName",
+      "docs-public-apis:@aws-cdk/aws-iot.TopicRule.renderActions",
+      "props-default-doc:@aws-cdk/aws-iot.TopicRuleActionProperty.cloudwatchAlarm"
     ]
   },
   "stability": "experimental",
