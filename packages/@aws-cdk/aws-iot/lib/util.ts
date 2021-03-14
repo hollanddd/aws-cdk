@@ -68,6 +68,8 @@ function parseArn(construct: IConstruct, resource: string, resourceName: string)
   });
 }
 
+export { undefinedIfAllValuesAreEmpty } from '@aws-cdk/core/lib/util';
+
 export function parseRuleName(topicRuleArn: string): string {
   return Fn.select(1, Fn.split('rule/', topicRuleArn));
 }
