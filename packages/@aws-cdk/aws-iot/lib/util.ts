@@ -1,9 +1,9 @@
-import { Fn, IConstruct, Stack, Arn } from '@aws-cdk/core';
+import { IRole, PolicyStatement, ServicePrincipal, Role } from '@aws-cdk/aws-iam';
+import { Fn, Stack, Arn } from '@aws-cdk/core';
+import { IConstruct } from 'constructs';
 import { CertificateAttributes } from './certificate';
 import { ThingAttributes } from './thing';
-
 export { generatePolicyName } from '@aws-cdk/aws-iam/lib/util';
-import { IRole, PolicyStatement, ServicePrincipal, Role } from '@aws-cdk/aws-iam';
 export { undefinedIfAllValuesAreEmpty } from '@aws-cdk/core/lib/util';
 
 // keep this import separate from other imports to reduce chance for merge conflicts with v2-main
