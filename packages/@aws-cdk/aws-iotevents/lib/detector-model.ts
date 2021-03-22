@@ -2,6 +2,7 @@ import { IRole } from '@aws-cdk/aws-iam';
 import { Resource, IResource, Tag } from '@aws-cdk/core';
 import { Construct } from 'constructs';
 import { CfnDetectorModel } from './iotevents.generated';
+import { IDefinition } from './definition';
 /**
  * Allowed evaluation methods
  */
@@ -47,7 +48,7 @@ export interface DetectorModelProps {
    *
    * @default none
    */
-  readonly definition?: CfnDetectorModel.DetectorModelDefinitionProperty;
+  readonly definition?: IDefinition;
   /**
    * Information about the order in which events are evaluated and how actions
    * are executed.
@@ -89,14 +90,20 @@ export interface DetectorModelProps {
 }
 
 /**
+ * Abstract for representing the detector model
+ */
+export abstract class DetectorBase extends Resource implements IDetectorModel {
+   public abstract readonly detectorModelName: string;
+}
+/**
  * Represents a new DetectorModel
  */
-export class DetectorModel extends Resource implements IDetectorModel {
+export class DetectorModel extends DetectorBase {
   /**
    * Import detector model from name
    */
   public static fromDetectorModelName(scope: Construct, id: string, name: string): IDetectorModel {
-    class Import extends Resource implements IDetectorModel {
+    class Import extends DetectorBase {
       public readonly detectorModelName = name;
     }
     return new Import(scope, id);
@@ -110,13 +117,12 @@ export class DetectorModel extends Resource implements IDetectorModel {
     });
 
     const resource = new CfnDetectorModel(this, 'Input', {
-      detectorModelDefinition: undefined,
+      detectorModelDefinition: props.definition || undefined,
       detectorModelDescription: props.description,
       detectorModelName: this.physicalName,
       evaluationMethod: props.evaluationMethod || EvaluationMethod.SERIAL,
       key: props.key,
-      // TODO: roleArn: props.role.roleArn || 'arn:aws:iam::::'
-      // TODO: tags: props.tags,
+      roleArn: props.role ? props.role.roleArn : '', // TODO: add singleton detector role
     });
 
     this.detectorModelName = resource.logicalId;
