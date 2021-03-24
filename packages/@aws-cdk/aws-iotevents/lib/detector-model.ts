@@ -1,8 +1,8 @@
 import { IRole } from '@aws-cdk/aws-iam';
 import { Resource, IResource, Tag } from '@aws-cdk/core';
 import { Construct } from 'constructs';
-import { CfnDetectorModel } from './iotevents.generated';
 import { IDefinition } from './definition';
+import { CfnDetectorModel } from './iotevents.generated';
 /**
  * Allowed evaluation methods
  */
@@ -88,12 +88,11 @@ export interface DetectorModelProps {
    */
   readonly tags?: Tag[];
 }
-
 /**
  * Abstract for representing the detector model
  */
 export abstract class DetectorBase extends Resource implements IDetectorModel {
-   public abstract readonly detectorModelName: string;
+  public abstract readonly detectorModelName: string;
 }
 /**
  * Represents a new DetectorModel
@@ -102,9 +101,9 @@ export class DetectorModel extends DetectorBase {
   /**
    * Import detector model from name
    */
-  public static fromDetectorModelName(scope: Construct, id: string, name: string): IDetectorModel {
+  public static fromDetectorModelName(scope: Construct, id: string, detectorModelName: string): IDetectorModel {
     class Import extends DetectorBase {
-      public readonly detectorModelName = name;
+      public readonly detectorModelName = detectorModelName;
     }
     return new Import(scope, id);
   }
